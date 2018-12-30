@@ -14,6 +14,8 @@ function [imout_z, imout_x, labels, sizes_z, sizes_x] = vid_get_random_batch(imd
     % Default parameters
     opts.exemplarSize = [];
     opts.instanceSize = [];
+    opts.features = [];
+    opts.feat_global = [];
     opts.frameRange = 50;
     opts.subMean = false;
     opts.colorRange = 255; % Adjust range from [0, 255] to [0, colorRange].
@@ -147,7 +149,7 @@ function [imout_z, imout_x, labels, sizes_z, sizes_x] = vid_get_random_batch(imd
     end
     
     % extract HOG features
-    feat = opts.features{1};
+    feat = opts.features;
     gparams = opts.feat_global;
     imout_z = feat.getFeature(uint8(imout_z), feat.fparams, gparams);
     imout_x = feat.getFeature(uint8(imout_x), feat.fparams, gparams);

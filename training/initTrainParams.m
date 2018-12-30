@@ -37,7 +37,7 @@ function [opts] = initTrainParams()
     opts.prefetch = false; % Both get_batch and cnn_train_dag depend on prefetch.
     
     opts.train.numEpochs = 50;
-    opts.train.learningRate = logspace(-2, -5, opts.train.numEpochs);
+    opts.train.learningRate = logspace(-5, -7, opts.train.numEpochs);
     opts.train.weightDecay = 5e-4;
     opts.train.batchSize = 8; % we empirically observed that small batches work better
     opts.train.profile = false;

@@ -48,7 +48,7 @@ classdef XCorrf < dagnn.Layer
             assert((size(z,1) < size(x,1)) ||(size(z,2) < size(x,2)), 'exemplar z has to be smaller than instance x');
             [wx,hx,cx,bx] = size(x);
             [wz,hz,cz,bz] = size(z);
-            p_z = zeros(hx,wx,cz,bz);
+            p_z = zeros(hx,wx,cz,bz,'single');
             h_pzidxL = floor((hx-hz)./2+1);
             h_pzidxH = h_pzidxL+hz+1;
             w_pzidxL = floor((wx-wz)./2+1);
@@ -62,18 +62,18 @@ classdef XCorrf < dagnn.Layer
             [wdl,hdl,cdl,bdl] = size(dldy);
 
             dldyf = fft2(dldy);
-            dldzf = xf.*dldyf;
-            dldxf = p_zf.*dldyf;
+            dldzf = xf.*repmat(dldyf,1,1,size(xf,3),1);
+            dldxf = p_zf.*repmat(dldyf,1,1,size(xf,3),1);
             
-            dldz = real(iff2(dldzf));
-            dldx = real(iff2(dldxf));
+            dldz = real(ifft2(dldzf));
+            dldx = real(ifft2(dldxf));
             
             [mx,nx,cb,one] = size(dldx);
             assert(mx == size(x, 1));
             assert(nx == size(x, 2));
             assert(cb == cx);
             assert(one == bx);
-            derInputs{1} = dldz(h_pzs,w_pzs,1:cz,1:bz);
+            derInputs{1} = dldz(h_pzidxL+1:h_pzidxH-1,w_pzidxL+1:w_pzidxH-1,1:cz,1:bz);
             derInputs{2} = dldx;
             derParams = {};
         end

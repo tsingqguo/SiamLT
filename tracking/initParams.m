@@ -37,6 +37,7 @@ function [p] = initParams
     % selected features
     hog_params.cell_size = p.feat_global.cell_size;
     hog_params.num_channel = 31;
+    hog_params.nDim = hog_params.num_channel;
     
     cn_params.tablename = 'CNnorm';
     cn_params.useForGray = false;
