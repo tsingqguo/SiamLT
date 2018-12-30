@@ -87,7 +87,7 @@ classdef XCorrf < dagnn.Layer
 
         function rfs = getReceptiveFields(obj)
             rfs(1,1).size = [inf inf]; % could be anything
-            rfs(1,1).stride = [1 1];
+            rfs(1,1).stride = [4 4];
             rfs(1,1).offset = 1;
             rfs(2,1).size = [inf inf];
             rfs(2,1).stride = [1 1];
